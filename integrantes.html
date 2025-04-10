@@ -55,6 +55,16 @@
       object-fit: cover;
     }
 
+    @media screen and (min-width: 992px) {
+      .member-image-joao {
+        object-position: 0px -20px;
+      }
+
+      .member-imagem-rogerio {
+        object-position: 0 -80px;
+      }
+    }
+
     .member-details h5 {
       /* Member Name */
       color: #0056b3;
@@ -131,7 +141,7 @@
     <div class="row team-member-row align-items-center">
       <div class="col-md-3 text-center">
         <div class="member-img-placeholder">
-          <img class="member-image" src="./fotos/joao.jpg" alt="">
+          <img class="member-image member-image-joao" src="./fotos/joao.jpg" alt="">
         </div>
       </div>
       <div class="col-md-9 member-details">
@@ -203,22 +213,21 @@
     <!-- Integrante 5 -->
     <div class="row team-member-row align-items-center">
       <div class="col-md-3 text-center">
-        <div class="member-img-placeholder">[Espaço para Foto]</div>
+        <div class="member-img-placeholder">
+          <img class="member-image member-imagem-rogerio" src="./fotos/rogerio.jpg" alt="">
+        </div>
       </div>
       <div class="col-md-9 member-details">
-        <h5>Rogerio</h5>
-        <h6 class="text-muted">[Cargo/Função - Ex: Analista de Inteligência de Ameaças (Threat Intel)]</h6>
-        <p>[Descrição detalhada: Coleta, análise e disseminação de inteligência sobre ameaças relevantes para a Secure+,
-          monitoramento de fontes de inteligência (OSINT, feeds), identificação de TTPs de adversários.]</p>
+        <h5>Rogerio Moraes</h5>
+        <h6 class="text-muted">Arquiteto de Banco de Dados</h6>
         <strong>Especialidades:</strong>
         <ul class="skills-list">
-          <li>[Threat Intelligence Platforms (TIP)]</li>
-          <li>[OSINT]</li>
-          <li>[MITRE ATT&CK Framework]</li>
-          <li>[Análise de Campanhas]</li>
+          <li>Banco de Dados</li>
+          <li>MySQL Server</li>
+          <li>PHP</li>
         </ul>
-        <p><small>Contato: [Ramal Interno ou Email Alias]</small><br>
-          <small>Perfil: <a href="#">[Link Interno ou LinkedIn (se aplicável)]</a></small>
+        <p><small>Contato: rogerio@secureplus.com</small><br>
+          <small>Perfil: <a href="#">LinkedIn</a></small>
         </p>
       </div>
     </div>
