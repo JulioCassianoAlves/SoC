@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Framework Secure+ Unified Defense (SUD) - Secure+</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 70px;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #f8f9fa;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .framework-section {
+      margin-bottom: 30px;
+    }
+
+    .domain-card {
+      border-left: 5px solid #007bff;
+      /* Blue border */
+      margin-bottom: 15px;
+    }
+
+    .domain-card.protect {
+      border-left-color: #28a745;
+    }
+
+    /* Green */
+    .domain-card.detect {
+      border-left-color: #ffc107;
+    }
+
+    /* Yellow */
+    .domain-card.respond {
+      border-left-color: #dc3545;
+    }
+
+    /* Red */
+    .domain-card.recover {
+      border-left-color: #17a2b8;
+    }
+
+    /* Teal */
+    .domain-card.govern {
+      border-left-color: #6f42c1;
+    }
+
+    /* Purple */
+  </style>
+</head>
+
+<body>
+  <!-- Barra de Navegação Simplificada -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="index.html">Secure+ SOC</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Voltar ao Dashboard</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <div class="container">
+    <h1 class="my-4">Framework Secure+ Unified Defense (SUD)</h1>
+
+    <div class="card framework-section">
+      <div class="card-header">
+        Visão Geral e Racionalização
+      </div>
+      <div class="card-body">
+        <p>O Framework Secure+ Unified Defense (SUD) é um modelo de segurança cibernética customizado, desenvolvido
+          internamente para atender às necessidades específicas e ao contexto de risco da Secure+. Ele integra as
+          melhores práticas e estruturas reconhecidas internacionalmente, como o NIST CSF, ISO 27001/27002 e COBIT, em
+          um modelo coeso e acionável.</p>
+        <p><strong>Objetivo:</strong> Criar uma abordagem unificada que não apenas guie as operações do SOC, mas também
+          se alinhe diretamente com os objetivos de negócio, requisitos regulatórios do setor financeiro e a cultura
+          organizacional da Secure+.</p>
+        <p><strong>Por que um framework próprio?</strong></p>
+        <ul>
+          <li><strong>Contextualização:</strong> Adaptação direta ao ambiente tecnológico e de ameaças da Secure+.</li>
+          <li><strong>Integração:</strong> Combina os pontos fortes de múltiplos frameworks (a estrutura do NIST, os
+            controles da ISO, a governança do COBIT) em um fluxo lógico.</li>
+          <li><strong>Eficiência:</strong> Foco nos controles e processos mais relevantes para a organização, otimizando
+            recursos.</li>
+          <li><strong>Clareza:</strong> Proporciona uma linguagem e estrutura comuns para todas as equipes envolvidas em
+            segurança e TI.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card framework-section">
+      <div class="card-header">
+        Princípios Fundamentais do SUD
+      </div>
+      <div class="card-body">
+        <ul>
+          <li><strong>Orientado a Riscos:</strong> Todas as atividades de segurança são priorizadas com base na
+            avaliação contínua de riscos e impacto nos negócios. (Influência: NIST CSF, ISO 27001, COBIT)</li>
+          <li><strong>Defesa em Profundidade:</strong> Implementação de múltiplos controles de segurança em camadas
+            (técnicos, administrativos, físicos). (Influência: ISO 27002)</li>
+          <li><strong>Visibilidade Contínua:</strong> Monitoramento abrangente e análise de logs/eventos para detecção
+            precoce. (Influência: NIST Detect)</li>
+          <li><strong>Resposta Rápida e Eficaz:</strong> Processos bem definidos e automatizados para conter e erradicar
+            ameaças rapidamente. (Influência: NIST Respond)</li>
+          <li><strong>Resiliência e Recuperação:</strong> Capacidade de restaurar operações críticas rapidamente após um
+            incidente. (Influência: NIST Recover, ISO 27001 Continuidade)</li>
+          <li><strong>Governança Integrada:</strong> Alinhamento claro com os objetivos de negócios, gestão de
+            conformidade e melhoria contínua. (Influência: COBIT, ISO 27001 Liderança/Melhoria)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card framework-section">
+      <div class="card-header">
+        Estrutura e Domínios do SUD
+      </div>
+      <div class="card-body">
+        <p>O SUD é organizado em domínios funcionais, inspirados no NIST CSF, mas enriquecidos com controles e
+          perspectivas da ISO e COBIT:</p>
+
+        <div class="card domain-card">
+          <div class="card-body">
+            <h5 class="card-title">1. Governança e Identificação (Govern & Identify)</h5>
+            <p class="card-text">Estabelecer a estratégia de segurança, gerenciar riscos, garantir conformidade e
+              entender o contexto de negócios, ativos e ameaças. Integra conceitos de COBIT (EDM, APO) e ISO (Contexto,
+              Liderança, Planejamento, Gestão de Ativos).</p>
+          </div>
+        </div>
+
+        <div class="card domain-card protect">
+          <div class="card-body">
+            <h5 class="card-title">2. Proteção (Protect)</h5>
+            <p class="card-text">Implementar salvaguardas para proteger ativos críticos. Inclui controles de acesso,
+              segurança de dados, segurança de rede, proteção de endpoints, etc. Baseado fortemente nos controles do
+              Anexo A da ISO 27001/27002 e nas categorias do NIST Protect.</p>
+          </div>
+        </div>
+
+        <div class="card domain-card detect">
+          <div class="card-body">
+            <h5 class="card-title">3. Detecção (Detect)</h5>
+            <p class="card-text">Monitorar continuamente o ambiente para identificar anomalias e eventos de segurança.
+              Abrange SIEM, análise de logs, threat intelligence, monitoramento de rede e sistemas. Alinhado com NIST
+              Detect e processos de monitoramento do COBIT (MEA) e ISO (Operações).</p>
+          </div>
+        </div>
+
+        <div class="card domain-card respond">
+          <div class="card-body">
+            <h5 class="card-title">4. Resposta (Respond)</h5>
+            <p class="card-text">Executar ações coordenadas ao detectar um incidente. Inclui análise, contenção,
+              erradicação e comunicação. Guiado pelo NIST Respond e pela gestão de incidentes da ISO 27001.</p>
+          </div>
+        </div>
+
+        <div class="card domain-card recover">
+          <div class="card-body">
+            <h5 class="card-title">5. Recuperação e Resiliência (Recover)</h5>
+            <p class="card-text">Restaurar serviços e operações após um incidente e implementar melhorias para aumentar
+              a resiliência. Baseado no NIST Recover e na gestão de continuidade de negócios da ISO 27001.</p>
+          </div>
+        </div>
+
+        <div class="card domain-card govern"> <!-- Re-using purple for emphasis on continuous cycle -->
+          <div class="card-body">
+            <h5 class="card-title">6. Melhoria Contínua (Improve)</h5>
+            <p class="card-text">Avaliar o desempenho, aprender com incidentes e experiências, e refinar continuamente o
+              framework, os controles e os processos. Incorpora princípios de melhoria da ISO 27001 e avaliação de
+              desempenho do COBIT (MEA).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card framework-section">
+      <div class="card-header">
+        Aplicação no SOC da Secure+
+      </div>
+      <div class="card-body">
+        <p>O SUD serve como o guia central para:</p>
+        <ul>
+          <li>Definir os processos e playbooks do SOC.</li>
+          <li>Selecionar e configurar ferramentas de segurança (SIEM, SOAR, EDR, etc.).</li>
+          <li>Estabelecer métricas de desempenho (KPIs) para o SOC.</li>
+          <li>Orientar treinamentos e desenvolvimento da equipe.</li>
+          <li>Facilitar auditorias internas e externas.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div> <!-- /.container -->
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Secure+. Todos os direitos reservados. | <a href="integrantes.html">Conheça a Equipe</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts do Bootstrap e dependências -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

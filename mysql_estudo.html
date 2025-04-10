@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estudo Técnico: Implementação MySQL - Secure+</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 70px;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #f8f9fa;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .study-section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      border-bottom: 2px solid #dee2e6;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      color: #007bff;
+      margin-top: 25px;
+    }
+
+    /* Blue headings for sub-sections */
+    code {
+      background-color: #f8f9fa;
+      padding: 2px 4px;
+      border-radius: 3px;
+      color: #c7254e;
+    }
+
+    .config-param {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Barra de Navegação Simplificada -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="index.html">Secure+ SOC</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Voltar ao Dashboard</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <div class="container">
+    <h1 class="my-4">Estudo Técnico: Implementação e Gestão de MySQL</h1>
+
+    <div class="alert alert-info study-section" role="alert">
+      <strong>Objetivo:</strong> Este documento apresenta um levantamento técnico sobre as melhores práticas para
+      instalação, configuração e gestão do MySQL, visando otimizar a infraestrutura de dados da Secure+.
+    </div>
+
+    <!-- Seção de Instalação -->
+    <section id="instalacao" class="study-section">
+      <h2>1. Instalação do MySQL</h2>
+      <p>A escolha do método de instalação depende do sistema operacional e da estratégia de implantação (bare-metal,
+        VM, container).</p>
+
+      <h3>1.1. Sistemas Linux (Debian/Ubuntu, RHEL/CentOS)</h3>
+      <p>Utilizar os gerenciadores de pacotes nativos é geralmente a forma mais simples e recomendada para garantir
+        atualizações fáceis.</p>
+      <ul>
+        <li><strong>Debian/Ubuntu:</strong> <code>sudo apt update && sudo apt install mysql-server</code></li>
+        <li><strong>RHEL/CentOS:</strong> <code>sudo yum update && sudo yum install mysql-community-server</code> (ou o
+          pacote apropriado para a versão desejada).</li>
+        <li><strong>Considerações:</strong> Verificar repositórios oficiais do MySQL para versões mais recentes, se
+          necessário.</li>
+      </ul>
+
+      <h3>1.2. Windows</h3>
+      <p>O MySQL Installer para Windows é a ferramenta recomendada, pois guia através da instalação e configuração
+        inicial de diversos componentes (Server, Workbench, connectors, etc.).</p>
+      <ul>
+        <li>Baixar o instalador do site oficial do MySQL.</li>
+        <li>Seguir as instruções do assistente, prestando atenção especial à configuração de segurança (senha do root,
+          usuários).</li>
+      </ul>
+
+      <h3>1.3. Docker</h3>
+      <p>Ideal para ambientes de desenvolvimento, teste e microsserviços. Utiliza a imagem oficial do Docker Hub.</p>
+      <ul>
+        <li>Comando base: <code>docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest</code>
+        </li>
+        <li><strong>Considerações:</strong> Persistência de dados (volumes), configuração de rede, variáveis de ambiente
+          para configuração inicial.</li>
+      </ul>
+
+      <h3>1.4. Pós-Instalação Essencial</h3>
+      <p>Independentemente do método, executar o script de segurança é crucial:</p>
+      <code>mysql_secure_installation</code>
+      <p>Este script ajuda a: definir a senha do root (se ainda não definida), remover usuários anônimos, desabilitar
+        login remoto do root, remover banco de dados de teste e recarregar privilégios.</p>
+
+    </section>
+
+    <!-- Seção de Configuração -->
+    <section id="configuracao" class="study-section">
+      <h2>2. Configuração Otimizada (`my.cnf` / `my.ini`)</h2>
+      <p>O arquivo de configuração principal (geralmente <code>/etc/mysql/my.cnf</code>, <code>/etc/my.cnf</code> ou
+        <code>C:\ProgramData\MySQL\MySQL Server X.Y\my.ini</code>) é vital para o desempenho e estabilidade. Os valores
+        devem ser ajustados com base nos recursos do servidor (RAM, CPU, Disco) e na carga de trabalho.
+      </p>
+
+      <h3>2.1. Alocação de Memória</h3>
+      <ul>
+        <li><span class="config-param">innodb_buffer_pool_size:</span> Parâmetro mais crítico para desempenho com
+          InnoDB. Define a quantidade de RAM alocada para cache de dados e índices. Recomendação comum: 50-70% da RAM
+          disponível no servidor dedicado ao MySQL. Monitorar o hit rate.</li>
+        <li><span class="config-param">key_buffer_size:</span> Relevante apenas se usar tabelas MyISAM (não recomendado
+          para a maioria dos casos). Aloca memória para cache de índices MyISAM.</li>
+        <li><span class="config-param">tmp_table_size / max_heap_table_size:</span> Limitam o tamanho de tabelas
+          temporárias em memória. Aumentar pode evitar a criação de tabelas temporárias em disco (lento), mas consome
+          mais RAM.</li>
+      </ul>
+
+      <h3>2.2. Conexões</h3>
+      <ul>
+        <li><span class="config-param">max_connections:</span> Número máximo de conexões simultâneas permitidas. Deve
+          ser definido com base na aplicação e nos recursos do servidor. Valores muito altos podem esgotar a memória.
+        </li>
+        <li><span class="config-param">wait_timeout / interactive_timeout:</span> Tempo em segundos que o servidor
+          espera por atividade em uma conexão antes de fechá-la. Valores menores ajudam a liberar conexões ociosas, mas
+          podem afetar aplicações com longos períodos de inatividade.</li>
+      </ul>
+
+      <h3>2.3. Storage Engine</h3>
+      <ul>
+        <li><strong>InnoDB:</strong> É o padrão e recomendado para a maioria das cargas de trabalho devido à sua
+          conformidade ACID, suporte a transações, recuperação de falhas e bloqueio em nível de linha (row-level
+          locking), que melhora a concorrência.</li>
+        <li><strong>MyISAM:</strong> Pode ser considerado em casos muito específicos (ex: tabelas read-heavy sem
+          necessidade de transações), mas geralmente é preterido em favor do InnoDB.</li>
+      </ul>
+
+      <h3>2.4. Logging</h3>
+      <ul>
+        <li><span class="config-param">log_error:</span> Especifica o arquivo onde erros críticos, avisos e notas são
+          registrados. Essencial para troubleshooting.</li>
+        <li><span class="config-param">slow_query_log / long_query_time:</span> Habilita o log de queries que excedem um
+          tempo especificado (em segundos). Fundamental para identificar consultas lentas e otimizá-las.</li>
+        <li><span class="config-param">general_log:</span> Registra todas as conexões e queries executadas. Use com
+          extrema cautela em produção, pois gera um volume enorme de dados e impacta o desempenho. Útil para depuração
+          específica.</li>
+        <li><span class="config-param">log_bin:</span> Habilita o log binário, essencial para replicação e recuperação
+          point-in-time (PITR).</li>
+      </ul>
+
+      <h3>2.5. Segurança na Configuração</h3>
+      <ul>
+        <li><span class="config-param">bind-address:</span> Restringe as interfaces de rede nas quais o MySQL escuta por
+          conexões. Use <code>127.0.0.1</code> ou o IP específico da interface de rede interna para evitar exposição à
+          internet, a menos que seja estritamente necessário e protegido por firewall.</li>
+        <li><span class="config-param">skip-networking:</span> Desabilita completamente as conexões TCP/IP (apenas
+          conexões via socket local). Use se o servidor de aplicação estiver na mesma máquina.</li>
+        <li>Evitar usar a conta `root` para aplicações. Criar usuários específicos com privilégios mínimos necessários.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Seção de Gestão e Manutenção -->
+    <section id="gestao" class="study-section">
+      <h2>3. Gestão e Manutenção Contínua</h2>
+
+      <h3>3.1. Segurança</h3>
+      <ul>
+        <li><strong>Gerenciamento de Usuários e Privilégios:</strong> Adotar o princípio do menor privilégio. Criar
+          usuários dedicados para cada aplicação/serviço com apenas as permissões necessárias (<code>SELECT</code>,
+          <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> em tabelas específicas). Evitar o uso de
+          <code>GRANT ALL PRIVILEGES</code>.
+        </li>
+        <li><strong>Senhas Fortes e Rotação:</strong> Utilizar senhas complexas e implementar uma política de rotação
+          periódica.</li>
+        <li><strong>Conexões Seguras:</strong> Configurar e exigir SSL/TLS para conexões remotas, especialmente se
+          trafegarem por redes não confiáveis.</li>
+        <li><strong>Auditoria:</strong> Considerar o uso de plugins de auditoria (MySQL Enterprise Audit ou alternativas
+          open source como o plugin de auditoria da Percona/MariaDB) para registrar atividades sensíveis.</li>
+      </ul>
+
+      <h3>3.2. Backup e Recuperação</h3>
+      <ul>
+        <li><strong>Estratégia:</strong> Definir uma política clara (RPO - Recovery Point Objective e RTO - Recovery
+          Time Objective). Combinar backups lógicos (<code>mysqldump</code>) e físicos (ex: Percona XtraBackup para
+          backups a quente sem bloqueio, ou snapshots em nível de volume/VM).</li>
+        <li><strong>Frequência:</strong> Backups completos regulares (ex: diário/semanal) e backups
+          incrementais/diferenciais ou log binário para recuperação point-in-time.</li>
+        <li><strong>Ferramentas:</strong>
+          <ul>
+            <li><code>mysqldump</code>: Para backups lógicos (SQL). Bom para bancos menores, migrações, backups
+              granulares. Lento e bloqueante (dependendo das opções) para bancos grandes.</li>
+            <li>Percona XtraBackup: Ferramenta open source popular para backups físicos "quentes" (online) de
+              InnoDB/XtraDB.</li>
+            <li>Snapshots (LVM, EBS, etc.): Rápidos, mas exigem consistência do sistema de arquivos (pode exigir breve
+              bloqueio ou flush).</li>
+          </ul>
+        </li>
+        <li><strong>Teste de Restauração:</strong> Agendar testes periódicos de restauração em um ambiente separado para
+          garantir a validade dos backups e o procedimento de recuperação.</li>
+      </ul>
+
+      <h3>3.3. Monitoramento</h3>
+      <ul>
+        <li><strong>Métricas Chave:</strong>
+          <ul>
+            <li>Desempenho: Queries por segundo (QPS), threads conectadas/rodando, latência de query, hit rate do buffer
+              pool InnoDB.</li>
+            <li>Recursos: Uso de CPU, RAM (especialmente buffer pool), I/O de disco, espaço em disco.</li>
+            <li>Replicação (se aplicável): Atraso de replicação (<code>Seconds_Behind_Master</code>).</li>
+            <li>Erros: Taxa de erros no log de erros.</li>
+          </ul>
+        </li>
+        <li><strong>Ferramentas:</strong>
+          <ul>
+            <li>Comandos Nativos: <code>SHOW GLOBAL STATUS</code>, <code>SHOW GLOBAL VARIABLES</code>,
+              <code>SHOW ENGINE INNODB STATUS</code>, <code>SHOW PROCESSLIST</code>.
+            </li>
+            <li>Performance Schema / Sys Schema: Visões que fornecem informações detalhadas sobre o desempenho interno
+              (habilitar se necessário, pode ter overhead).</li>
+            <li>Ferramentas Externas: Prometheus com `mysqld_exporter`, Grafana para dashboards, Percona Monitoring and
+              Management (PMM), Nagios/Zabbix com plugins, Datadog, New Relic, ferramentas do provedor de nuvem (AWS RDS
+              Performance Insights, Azure Monitor).</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>3.4. Otimização</h3>
+      <ul>
+        <li><strong>Indexação:</strong> Criar índices apropriados nas colunas usadas em cláusulas <code>WHERE</code>,
+          <code>JOIN</code> e <code>ORDER BY</code>. Analisar queries lentas (via slow query log) para identificar
+          índices faltantes ou ineficientes. Evitar índices redundantes.
+        </li>
+        <li><strong>Análise de Queries:</strong> Usar <code>EXPLAIN</code> para entender como o MySQL executa uma query
+          e identificar gargalos (ex: full table scans, uso inadequado de índices).</li>
+        <li><strong>Manutenção de Tabelas:</strong> Periodicamente rodar <code>OPTIMIZE TABLE</code> (para InnoDB,
+          basicamente recria a tabela, recuperando espaço fragmentado) e <code>ANALYZE TABLE</code> (atualiza
+          estatísticas para o otimizador de consultas).</li>
+        <li><strong>Schema Design:</strong> Escolher tipos de dados apropriados, normalizar o schema (com bom senso, às
+          vezes desnormalização controlada ajuda no desempenho).</li>
+      </ul>
+
+      <h3>3.5. Alta Disponibilidade (HA) e Escalabilidade</h3>
+      <ul>
+        <li><strong>Replicação MySQL:</strong> Configuração Master-Slave (ou Master-Replica) para leitura distribuída e
+          failover manual/semi-automático. Replicação Master-Master é complexa e deve ser usada com cuidado (risco de
+          conflitos).</li>
+        <li><strong>InnoDB Cluster / Group Replication:</strong> Solução nativa do MySQL para HA com failover
+          automático, baseada em replicação síncrona (ou quase).</li>
+        <li><strong>Proxies/Load Balancers:</strong> Ferramentas como ProxySQL ou HAProxy podem ser usadas para
+          distribuir carga de leitura entre réplicas, gerenciar failover e mascarar a topologia de replicação da
+          aplicação.</li>
+        <li><strong>Escalabilidade Vertical vs Horizontal:</strong> Aumentar recursos do servidor (vertical) vs.
+          adicionar mais servidores (horizontal, geralmente com sharding ou replicação).</li>
+      </ul>
+    </section>
+
+    <!-- Seção de Conclusão -->
+    <section id="conclusao" class="study-section">
+      <h2>4. Conclusões e Recomendações</h2>
+      <p>A implementação bem-sucedida do MySQL na Secure+ requer uma abordagem holística, cobrindo desde a instalação
+        segura até a gestão proativa e otimização contínua.</p>
+      <p><strong>Recomendações Chave:</strong></p>
+      <ul>
+        <li>Padronizar a instalação e aplicar configurações de segurança desde o início
+          (<code>mysql_secure_installation</code>).</li>
+        <li>Investir tempo na otimização do arquivo de configuração (<code>my.cnf</code>/<code>my.ini</code>), focando
+          no <code>innodb_buffer_pool_size</code> e ajustando com base na carga e recursos.</li>
+        <li>Implementar uma estratégia robusta e testada de backup e recuperação.</li>
+        <li>Estabelecer monitoramento contínuo das métricas chave de desempenho e recursos.</li>
+        <li>Priorizar a segurança em todas as camadas: rede, configuração do servidor, gerenciamento de usuários e
+          privilégios.</li>
+        <li>Analisar e otimizar queries lentas regularmente usando o slow query log e <code>EXPLAIN</code>.</li>
+        <li>Considerar soluções de HA (como InnoDB Cluster ou replicação com proxy) com base nos requisitos de
+          disponibilidade da aplicação.</li>
+        <li>Manter o MySQL e o sistema operacional atualizados com patches de segurança.</li>
+      </ul>
+      <p>Este estudo fornece a base técnica. A implementação específica deve ser continuamente avaliada e ajustada
+        conforme a evolução das necessidades e da carga de trabalho da Secure+.</p>
+    </section>
+
+  </div> <!-- /.container -->
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Secure+. Todos os direitos reservados. | <a href="integrantes.html">Conheça a Equipe</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts do Bootstrap e dependências -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure+ SOC Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      padding-top: 70px;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #f8f9fa;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    /* Define um tamanho fixo para os gráficos, evitando que ocupem a tela inteira */
+    .chart-container {
+      position: relative;
+      margin: auto;
+      height: 250px;
+      width: 100%;
+    }
+
+    .chart-card {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Barra de Navegação -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#">Secure+ SOC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#frameworks">Frameworks</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reports">Relatórios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#incidents">Incidentes</a></li>
+        <li class="nav-item"><a class="nav-link" href="#communications">Comunicações</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Conteúdo Principal -->
+  <div class="container">
+    <!-- Seção Dashboard -->
+    <section id="dashboard" class="my-5">
+      <h2 class="mb-4">Dashboard do SOC</h2>
+      <div class="row">
+        <!-- Cartão 1: Histórico de Tentativas de Ataque -->
+        <div class="col-md-6 chart-card">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Histórico de Tentativas de Ataque</h5>
+              <div class="chart-container">
+                <canvas id="attackChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Cartão 2: Tipos de Incidentes -->
+        <div class="col-md-6 chart-card">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Tipos de Incidentes</h5>
+              <div class="chart-container">
+                <canvas id="incidentTypeChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Linha única para o gráfico de tempo de resposta -->
+      <div class="row">
+        <div class="col-md-12 chart-card">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Tempo Médio de Resposta</h5>
+              <div class="chart-container">
+                <canvas id="responseTimeChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        // Gráfico 1: Histórico de Tentativas de Ataque (Linha)
+        var ctx1 = document.getElementById('attackChart').getContext('2d');
+        var attackChart = new Chart(ctx1, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
+            datasets: [{
+              label: 'Tentativas de Ataque',
+              data: [12, 19, 3, 5, 2, 3, 10],
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: { display: true, text: 'Histórico de Tentativas de Ataque' },
+            scales: { yAxes: [{ ticks: { beginAtZero: true } }] }
+          }
+        });
+        // Gráfico 2: Tipos de Incidentes (Pizza)
+        var ctx2 = document.getElementById('incidentTypeChart').getContext('2d');
+        var incidentTypeChart = new Chart(ctx2, {
+          type: 'pie',
+          data: {
+            labels: ['Tentativa de Acesso', 'Malware', 'Phishing', 'DDoS'],
+            datasets: [{
+              data: [40, 25, 20, 15],
+              backgroundColor: [
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)'
+              ]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: { display: true, text: 'Tipos de Incidentes' }
+          }
+        });
+        // Gráfico 3: Tempo Médio de Resposta (Barras)
+        var ctx3 = document.getElementById('responseTimeChart').getContext('2d');
+        var responseTimeChart = new Chart(ctx3, {
+          type: 'bar',
+          data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
+            datasets: [{
+              label: 'Tempo Médio de Resposta (min)',
+              data: [30, 25, 28, 22, 20, 24, 26],
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: { display: true, text: 'Tempo Médio de Resposta' },
+            scales: { yAxes: [{ ticks: { beginAtZero: true } }] }
+          }
+        });
+      </script>
+    </section>
+
+    <section id="frameworks" class="my-5">
+      <h2 class="mb-4">Recursos sobre Frameworks de Segurança</h2>
+      <p>Para fortalecer o aprendizado da equipe interna, explore informações sobre os principais frameworks de
+        segurança e governança:</p>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">NIST Cybersecurity Framework (CSF)</h5>
+              <p class="card-text">Um framework flexível e baseado em riscos para gerenciar e reduzir riscos de
+                segurança cibernética.</p>
+              <a href="nist_csf.html" class="btn btn-primary">Saiba Mais</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">ISO/IEC 27001 / 27002</h5>
+              <p class="card-text">Padrões internacionais para estabelecer, implementar e manter um Sistema de Gestão de
+                Segurança da Informação (SGSI).</p>
+              <a href="iso_27001.html" class="btn btn-primary">Saiba Mais</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">COBIT</h5>
+              <p class="card-text">Framework para a governança e gestão da informação e tecnologia corporativa,
+                alinhando TI aos objetivos de negócio.</p>
+              <a href="cobit.html" class="btn btn-primary">Saiba Mais</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="internal-resources" class="my-5">
+      <h2 class="mb-4">Recursos Técnicos e Internos</h2>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Framework Secure+ Unified Defense (SUD)</h5>
+              <p class="card-text">Nosso framework de segurança proprietário, integrando as melhores práticas de mercado
+                adaptadas à Secure+.</p>
+              <a href="framework_proprio.html" class="btn btn-info">Consultar Framework SUD</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Estudo Técnico: Implementação MySQL</h5>
+              <p class="card-text">Levantamento detalhado sobre melhores práticas para instalação, configuração e gestão
+                do MySQL em nossa infraestrutura.</p>
+              <a href="mysql_estudo.html" class="btn btn-info">Acessar Estudo MySQL</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Relatórios -->
+    <section id="reports" class="my-5">
+      <h2 class="mb-4">Relatórios e Análises</h2>
+      <div class="card mb-3">
+        <div class="card-header">
+          Relatório Semanal
+          <button class="btn btn-sm btn-info float-right" data-toggle="collapse" data-target="#weeklyReport">
+            Ver detalhes
+          </button>
+        </div>
+        <div id="weeklyReport" class="collapse card-body">
+          <p>Resumo das atividades e análises dos incidentes da semana:</p>
+          <ul>
+            <li>Incidentes identificados: 5</li>
+            <li>Bloqueios de IP: 12</li>
+            <li>Alertas críticos: 3</li>
+          </ul>
+          <p>Mais informações disponíveis para consulta interna.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          Relatório Mensal
+          <button class="btn btn-sm btn-info float-right" data-toggle="collapse" data-target="#monthlyReport">
+            Ver detalhes
+          </button>
+        </div>
+        <div id="monthlyReport" class="collapse card-body">
+          <p>Análise detalhada dos incidentes e tendências mensais:</p>
+          <ul>
+            <li>Total de incidentes: 20</li>
+            <li>Incidentes críticos: 5</li>
+            <li>Média de tempo de resposta: 24 minutos</li>
+          </ul>
+          <p>Insights e recomendações para melhoria dos processos de segurança.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Seção Incidentes -->
+    <section id="incidents" class="my-5">
+      <h2 class="mb-4">Histórico de Incidentes</h2>
+      <div id="incidentAccordion">
+        <div class="card">
+          <div class="card-header" id="incidentHeadingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#incidentOne" aria-expanded="true">
+                Incidente 001 - Tentativa de Invasão
+              </button>
+            </h5>
+          </div>
+          <div id="incidentOne" class="collapse" data-parent="#incidentAccordion">
+            <div class="card-body">
+              <p><strong>Descrição:</strong> Tentativa de acesso não autorizado no sistema de
+                pagamentos.</p>
+              <p><strong>Ações:</strong> Bloqueio de IP, análise forense e reforço dos
+                controles de segurança.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="incidentHeadingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#incidentTwo">
+                Incidente 002 - Malware Identificado
+              </button>
+            </h5>
+          </div>
+          <div id="incidentTwo" class="collapse" data-parent="#incidentAccordion">
+            <div class="card-body">
+              <p><strong>Descrição:</strong> Detecção de malware em endpoints críticos.</p>
+              <p><strong>Ações:</strong> Isolamento do dispositivo, remoção do malware e
+                análise de vulnerabilidades.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="incidentHeadingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#incidentThree">
+                Incidente 003 - Ataque de Phishing
+              </button>
+            </h5>
+          </div>
+          <div id="incidentThree" class="collapse" data-parent="#incidentAccordion">
+            <div class="card-body">
+              <p><strong>Descrição:</strong> E-mail suspeito direcionado a funcionários com
+                link para site malicioso.
+              </p>
+              <p><strong>Ações:</strong> Bloqueio de domínio, treinamento de conscientização
+                e reforço da verificação de
+                e-mails.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="incidentHeadingFour">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#incidentFour">
+                Incidente 004 - Ataque DDoS
+              </button>
+            </h5>
+          </div>
+          <div id="incidentFour" class="collapse" data-parent="#incidentAccordion">
+            <div class="card-body">
+              <p><strong>Descrição:</strong> Volume elevado de tráfego malicioso
+                sobrecarregando os servidores.</p>
+              <p><strong>Ações:</strong> Redirecionamento de tráfego, ativação de proteção
+                DDoS e monitoramento
+                contínuo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Seção Comunicações Internas -->
+    <section id="communications" class="my-5">
+      <h2 class="mb-4">Comunicações Internas</h2>
+      <input type="text" id="searchComm" class="form-control mb-3" placeholder="Buscar
+comunicações...">
+      <div class="list-group" id="commList">
+        <a href="#" class="list-group-item list-group-item-action">
+          <h5 class="mb-1">Atualização do SOC</h5>
+          <p class="mb-1">Implementação de novo protocolo de resposta a incidentes.</p>
+          <small>Publicado em 28/02/2025</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <h5 class="mb-1">Aviso de Manutenção</h5>
+          <p class="mb-1">Manutenção agendada para reforço dos controles de segurança.</p>
+          <small>Publicado em 20/02/2025</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <h5 class="mb-1">Novo Relatório de Vulnerabilidades</h5>
+          <p class="mb-1">Análise completa das vulnerabilidades detectadas nos sistemas
+            internos.</p>
+          <small>Publicado em 15/02/2025</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <h5 class="mb-1">Treinamento de Segurança</h5>
+          <p class="mb-1">Sessão de treinamento agendada para conscientização de phishing e
+            engenharia social.</p>
+          <small>Publicado em 10/02/2025</small>
+        </a>
+      </div>
+      <script>
+        // Filtro dinâmico para comunicações
+        document.getElementById('searchComm').addEventListener('keyup', function () {
+          var filter = this.value.toLowerCase();
+          var items = document.querySelectorAll('#commList a');
+          items.forEach(function (item) {
+            var text = item.textContent.toLowerCase();
+            item.style.display = text.indexOf(filter) > -1 ? '' : 'none';
+          });
+        });
+      </script>
+    </section>
+  </div>
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Secure+. Todos os direitos reservados. | <a href="integrantes.html">Conheça a Equipe</a></p>
+    </div>
+  </footer>
+
+  <!-- Creditos -->
+  <!--
+    Júlio Cassiano Alves (GTI)
+  -->
+
+  <!-- Scripts do Bootstrap e dependências -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

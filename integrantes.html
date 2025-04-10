@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Integrantes da Equipe - Secure+</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 70px;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #f8f9fa;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .team-member-row {
+      margin-bottom: 40px;
+      /* Increased spacing between members */
+      padding-bottom: 20px;
+      border-bottom: 1px solid #dee2e6;
+      /* Separator line */
+    }
+
+    .member-img-placeholder {
+      height: 200px;
+      /* Slightly larger image placeholder */
+      width: 100%;
+      /* Ensure it fills its column */
+      background-color: #e9ecef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+      font-style: italic;
+      border-radius: 5px;
+      /* Optional rounded corners */
+      margin-bottom: 15px;
+      /* Space below image on small screens */
+      overflow: hidden
+    }
+
+    .member-image {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .member-details h5 {
+      /* Member Name */
+      color: #0056b3;
+      /* Darker blue for name */
+    }
+
+    .member-details h6 {
+      /* Role */
+      font-style: italic;
+    }
+
+    .skills-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .skills-list li {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Barra de Navegação Simplificada -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="index.html">Secure+ SOC</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Voltar ao Dashboard</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <div class="container">
+    <h1 class="my-4 text-center">Equipe de Pesquisa e Implementação do SOC</h1>
+    <p class="lead text-center mb-5">Conheça os profissionais dedicados à segurança da Secure+.</p>
+
+    <!-- Integrante 1 -->
+    <div class="row team-member-row align-items-center">
+      <div class="col-md-3 text-center">
+        <div class="member-img-placeholder">
+          <img class="member-image" src="./fotos/julio.jpg" alt="">
+        </div>
+      </div>
+      <div class="col-md-9 member-details">
+        <h5>Júlio Cassiano Alves</h5>
+        <h6 class="text-muted">Líder de Projeto / Desenvolvedor WEB / DevOps</h6>
+
+        <strong>Especialidades:</strong>
+        <ul class="skills-list">
+          <li>Técnico e Infraestrutura</li>
+          <li>AWS</li>
+          <li>Google Cloud</li>
+          <li>PostgresSQL</li>
+          <li>Docker</li>
+          <li>Proxmox</li>
+        </ul>
+        <p><small>Contato: julioalves@secureplus.com</small><br>
+          <small>Perfil: <a href="https://www.linkedin.com/in/julio-cassiano-alves-369b26338/">LinkedIn</a></small>
+        </p>
+      </div>
+    </div>
+    <hr class="d-md-none"> <!-- Separator only visible on small screens where border-bottom might not be enough -->
+
+    <!-- Integrante 2 -->
+    <div class="row team-member-row align-items-center">
+      <div class="col-md-3 text-center">
+        <div class="member-img-placeholder">
+          <img class="member-image" src="./fotos/joao.jpg" alt="">
+        </div>
+      </div>
+      <div class="col-md-9 member-details">
+        <h5>João Pinto Rosa</h5>
+        <h6 class="text-muted">Analista de Segurança</h6>
+
+        <strong>Especialidades:</strong>
+        <ul class="skills-list">
+          <li>Análise de Logs</li>
+          <li>Threat Hunting</li>
+          <li>SIEM XYZ</li>
+        </ul>
+        <p><small>Contato: joaopinto@secureplus.com</small><br>
+          <small>Perfil: <a href="#">LinkedIn</a></small>
+        </p>
+      </div>
+    </div>
+    <hr class="d-md-none">
+
+    <!-- Integrante 3 -->
+    <div class="row team-member-row align-items-center">
+      <div class="col-md-3 text-center">
+        <div class="member-img-placeholder">
+          <img class="member-image" src="./fotos/joao r.jpg" alt="">
+        </div>
+      </div>
+      <div class="col-md-9 member-details">
+        <h5>João Ricardo Alves Rodrigues De Santana</h5>
+        <h6 class="text-muted">Engenheiro de Prompt</h6>
+
+        <strong>Especialidades:</strong>
+        <ul class="skills-list">
+          <li>ChatGPT</li>
+          <li>Gemini</li>
+          <li>Claude</li>
+          <li>DeepSeek</li>
+        </ul>
+        <p><small>Contato: jao@secureplus.com</small><br>
+          <small>Perfil: <a href="#">LinkedIn</a></small>
+        </p>
+      </div>
+    </div>
+    <hr class="d-md-none">
+
+    <!-- Integrante 4 -->
+    <div class="row team-member-row align-items-center">
+      <div class="col-md-3 text-center">
+        <div class="member-img-placeholder">
+          <img class="member-image" src="./fotos/derick.jpg" alt="">
+        </div>
+      </div>
+      <div class="col-md-9 member-details">
+        <h5>Poul Derick Soares de Souza</h5>
+        <h6 class="text-muted">Engenheiro de Segurança Cloud / DevSecOps</h6>
+
+        <strong>Especialidades:</strong>
+        <ul class="skills-list">
+          <li>AWS</li>
+          <li>Google Cloud</li>
+          <li>Azure</li>
+        </ul>
+        <p><small>Contato: poulderick@secureplus.com</small><br>
+          <small>Perfil: <a href="#">LinkedIn</a></small>
+        </p>
+      </div>
+    </div>
+    <hr class="d-md-none">
+
+    <!-- Integrante 5 -->
+    <div class="row team-member-row align-items-center">
+      <div class="col-md-3 text-center">
+        <div class="member-img-placeholder">[Espaço para Foto]</div>
+      </div>
+      <div class="col-md-9 member-details">
+        <h5>Rogerio</h5>
+        <h6 class="text-muted">[Cargo/Função - Ex: Analista de Inteligência de Ameaças (Threat Intel)]</h6>
+        <p>[Descrição detalhada: Coleta, análise e disseminação de inteligência sobre ameaças relevantes para a Secure+,
+          monitoramento de fontes de inteligência (OSINT, feeds), identificação de TTPs de adversários.]</p>
+        <strong>Especialidades:</strong>
+        <ul class="skills-list">
+          <li>[Threat Intelligence Platforms (TIP)]</li>
+          <li>[OSINT]</li>
+          <li>[MITRE ATT&CK Framework]</li>
+          <li>[Análise de Campanhas]</li>
+        </ul>
+        <p><small>Contato: [Ramal Interno ou Email Alias]</small><br>
+          <small>Perfil: <a href="#">[Link Interno ou LinkedIn (se aplicável)]</a></small>
+        </p>
+      </div>
+    </div>
+    <!-- End Integrante 5 -->
+
+  </div> <!-- /.container -->
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Secure+. Todos os direitos reservados. | <a href="integrantes.html">Conheça a Equipe</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts do Bootstrap e dependências -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
